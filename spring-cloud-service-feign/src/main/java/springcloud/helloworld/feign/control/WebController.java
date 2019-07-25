@@ -17,6 +17,11 @@ public class WebController {
     @Autowired
     private CircuitBreakerService circuitBreakerService;
     
+    
+    /**
+     * 多次刷新，轮询访问各个服务器，
+     * @return
+     */
     @RequestMapping(value = "hello",method = RequestMethod.GET)
     public String sayHello(){
         return helloWorldFeignService.sayHello();

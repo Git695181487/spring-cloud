@@ -51,8 +51,7 @@
 		    <groupId>org.springframework.cloud</groupId>  
 		    <artifactId>spring-cloud-starter-bus-amqp</artifactId>  
 		</dependency>
-       
-       
+		
    </dependencies>
 
    <dependencyManagement>
@@ -88,4 +87,5 @@
    </repositories>
  
 	
+   <packaging>war</packaging>
 </project>

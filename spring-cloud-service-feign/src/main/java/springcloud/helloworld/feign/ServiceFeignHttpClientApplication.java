@@ -6,21 +6,19 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.netflix.feign.EnableFeignClients;
 
 /**
- * 使用@EnableDiscoveryClient开启服务自动发现	
+ * 在Feign中使用Apache HTTP Client替换Feign原始的http client
+ * 从而获取连接池、超时时间等与性能息息相关的控制能力
  */
 @SpringBootApplication
 @EnableDiscoveryClient  
 @EnableFeignClients
-public class ServiceFeignApplication {
+public class ServiceFeignHttpClientApplication {
 	
 	/**
-	 * HelloWorldService:使用@FeignClient配置访问的项目；
-	 * 通过@RequestMapping，配置访问服务方法的具体路径
-	 * 
-	 * Feign访问服务已经缺省使用了Ribbon负载均衡。
+	 * Feign在默认情况下使用的是JDK原生的URLConnection发送HTTP请求，没有连接池，但是对每个地址gwai会保持一个长连接
 	 * @param args
 	 */
     public static void main(String[] args) {
-        SpringApplication.run(ServiceFeignApplication.class, args);
+        SpringApplication.run(ServiceFeignHttpClientApplication.class, args);
     }
 }

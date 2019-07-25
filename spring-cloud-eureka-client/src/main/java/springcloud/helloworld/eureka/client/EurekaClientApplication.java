@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RestController;
 @SpringBootApplication
 @EnableEurekaClient
 @RestController
-
 public class EurekaClientApplication {
 
     public static void main(String[] args) {

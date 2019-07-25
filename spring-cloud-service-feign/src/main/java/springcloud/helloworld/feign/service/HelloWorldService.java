@@ -30,9 +30,18 @@ public interface HelloWorldService {
     
    
     /**
-     *  注意，如果在@RequetMapping中的method将请求方式指定为POST，那么所有未标注解的参数将会被忽略
+     *  @PathVariable绑定URI模板变量值
+     *  默认情况下，Feign会将标有@RequestParam注解的参数转换成字符串添加到URL中，将没有注解的参数通过Jackson转换成json放到请求体中
+     *  
+     *  注意，如果在@RequetMapping中的method将请求方式指定为GET，那么所有未标注解的参数将会被忽略
      *  此时因为声明的是GET请求没有请求体，所以obj参数就会被忽略。
      */
     @RequestMapping(value = "/group/{groupId}", method = RequestMethod.GET)
     void update(@PathVariable("groupId") Integer groupId, @RequestParam("groupName") String groupName, Object obj);
+    
+    
+    
+    
+    
+    
 }
