@@ -12,4 +12,8 @@ public class ServiceZuulApplication {
     public static void main(String[] args) {
         SpringApplication.run(ServiceZuulApplication.class, args);
     }
+    /**
+     * http://df00279.df-global.cn:8093/api-feign/
+     * http://df00279.df-global.cn:8093/service-ribbon/
+     */
 }
