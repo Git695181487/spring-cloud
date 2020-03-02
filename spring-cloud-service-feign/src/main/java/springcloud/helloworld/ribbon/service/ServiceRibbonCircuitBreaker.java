@@ -20,7 +20,7 @@ import springcloud.helloworld.ribbon.client.HelloService;
 @SpringBootApplication
 @EnableDiscoveryClient
 @RestController
-@EnableCircuitBreaker
+@EnableCircuitBreaker  //开启熔断机制
 @ComponentScan("springcloud.helloworld.ribbon.client")
 public class ServiceRibbonCircuitBreaker {
 	

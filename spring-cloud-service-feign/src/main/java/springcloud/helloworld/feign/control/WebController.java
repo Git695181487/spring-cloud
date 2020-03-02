@@ -24,12 +24,20 @@ public class WebController {
      */
     @RequestMapping(value = "hello",method = RequestMethod.GET)
     public String sayHello(){
-        return helloWorldFeignService.sayHello();
+        return helloWorldFeignService.sayHello()+" I from feign";
     }
     
     @RequestMapping(value = "/breaker",method = RequestMethod.GET)
     public String sayBreaker(){
     	return circuitBreakerService.sayHello();
     }
+    
+    @RequestMapping(value = "/",method = RequestMethod.GET)
+    public String Hello(){
+    	return helloWorldFeignService.sayHello()+"I from feign";
+    }
+    
+    
+    
     
 }
