@@ -1,4 +1,4 @@
-package springcloud.helloworld.ribbon.client;
+package springcloud.helloworld.hystrix.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,11 +12,12 @@ public class HelloService {
     @Autowired 
     RestTemplate restTemplate;
 
-    @HystrixCommand(fallbackMethod="serviceFailure")
     /**
+     * 开启熔断器功能
      * 当底层服务失败后，fallbackMethod替换的不是整个被@HystrixCommand注解的方法（getHelloContent方法依然会被调用), 
      * 替换的只是通过restTemplate去访问的具体服务
      */
+    @HystrixCommand(fallbackMethod="serviceFailure") 
     public String getHelloContent() {
     	System.out.println("HelloService.getHelloContent().........................");
         return restTemplate.getForObject("http://SERVICE-HELLOWORLD/",String.class);
@@ -24,15 +25,6 @@ public class HelloService {
     
     public String getHelloContent(String str) {
     	return restTemplate.getForObject("http://SERVICE-HELLOWORLD/",String.class);
-    }
-    
-    
-    public String getName(String id) {
-    	if(id == null || "".equals(id)){
-    		return restTemplate.getForObject("http://SERVICE-HELLOWORLD/getName",String.class);
-    	}else{
-    		return restTemplate.getForObject("http://SERVICE-HELLOWORLD/getNameById?id="+id,String.class);
-    	}
     }
     
     /**

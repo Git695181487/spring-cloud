@@ -1,30 +1,37 @@
-package springcloud.helloworld.ribbon.service;
+package springcloud.helloworld.hystrix;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
+import org.springframework.cloud.netflix.hystrix.EnableHystrix;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
 import springcloud.helloworld.ribbon.client.HelloService;
 /**
- * @EnableDiscoveryClient向服务中心注册，并且注册了一个叫restTemplate的bean。
+ * 熔断机制-短路器
  */
 @SpringBootApplication
 @EnableDiscoveryClient
 @RestController
-//当要加载的类和该启动类在同一个文件夹（或子文件夹中）不需要加该注释
+//@EnableCircuitBreaker //熔断机制
+@EnableHystrix //开启断路器
 @ComponentScan("springcloud.helloworld.ribbon.client")
-public class ServiceRibbonApplication {
+public class ServiceRibbonCircuitBreaker {
+	
+	@Autowired
+	private RestTemplateBuilder builder;
+	@Autowired
+	private HelloService helloService;
 
     public static void main(String[] args) {
-        SpringApplication.run(ServiceRibbonApplication.class, args);
+        SpringApplication.run(ServiceRibbonCircuitBreaker.class, args);
     }
 
     /**
@@ -33,18 +40,12 @@ public class ServiceRibbonApplication {
     @Bean
     @LoadBalanced
     RestTemplate restTemplate() {
-        return new RestTemplate();
+//        return new RestTemplate();
+    	 return builder.build();
     }
-    
-    @Autowired
-	private HelloService helloService;
     
 	@RequestMapping("/")
 	public String Hello() {
-		return helloService.getHelloContent()+"ServiceRibbonApplication.Hello()";
-	}
-	@RequestMapping("/getName")
-	public String getName(@RequestParam("id") String id) {
-		return helloService.getName(id)+"ServiceRibbonApplication.Hello()";
+		return helloService.getHelloContent();
 	}
 }
